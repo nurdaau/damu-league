@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Даму Лига</title>
-  <style>
+<style>
     :root {
       --primary: #004080;
       --primary-dark: #002244;
@@ -87,8 +87,10 @@
       color: white;
       padding: 0.5rem 0;
       box-shadow: 0 2px 10px var(--shadow);
-      position: sticky;
-      top: 0;
+      /* Изменение здесь: */
+      position: fixed; /* Изменено с sticky на fixed */
+      width: 100%;    /* Добавлено для растягивания на всю ширину */
+      top: 0;         /* Прикрепление к верхней части экрана */
       z-index: 100;
     }
 
@@ -164,6 +166,8 @@
       background: var(--card);
       border-radius: 0.8rem;
       box-shadow: 0 4px 20px var(--shadow);
+      /* Добавлено для отступа под фиксированной шапкой */
+      margin-top: 10rem; /* Отрегулируйте это значение по необходимости */
     }
 
     .theme-toggle {
@@ -389,6 +393,8 @@
         border-radius: 0;
         box-shadow: none;
         padding: 1rem;
+        /* Убедитесь, что отступ остается и на мобильных */
+        margin-top: 10rem; /* Можно настроить для мобильных */
       }
 
       table {
@@ -450,7 +456,6 @@
   </header>
 
   <main>
-    <!-- Расписание матчей -->
     <section id="schedule" class="page active">
       <h2>Расписание матчей</h2>
       <p class="note">Циолковский 2Б</p>
@@ -464,7 +469,6 @@
       </div>
       
       <div id="days">
-        <!-- Дивизион 2011-2012 -->
         <div class="division" id="2011-2012" style="display: block;">
           <h3>🔴 2011–2012</h3>
           <table>
@@ -491,7 +495,6 @@
           </table>
         </div>
         
-        <!-- Дивизион 2013-2014 A -->
         <div class="division" id="2013-2014-A" style="display: none;">
           <h3>🟡 2013–2014 – Дивизион A</h3>
           <table>
@@ -548,7 +551,6 @@
           </table>
         </div>
         
-        <!-- Дивизион 2013-2014 B -->
         <div class="division" id="2013-2014-B" style="display: none;">
           <h3>🟢 2013–2014 – Дивизион B</h3>
           <table>
@@ -605,7 +607,6 @@
           </table>
         </div>
         
-        <!-- Дивизион 2015-2016 A -->
         <div class="division" id="2015-2016-A" style="display: none;">
           <h3>🔵 2015–2016 – Дивизион A</h3>
           <table>
@@ -677,7 +678,6 @@
           </table>
         </div>
         
-        <!-- Дивизион 2015-2016 B -->
         <div class="division" id="2015-2016-B" style="display: none;">
           <h3>⚪ 2015–2016 – Дивизион B</h3>
           <table>
@@ -751,7 +751,6 @@
       </div>
     </section>
 
-    <!-- Турнирная таблица -->
     <section id="table" class="page">
       <h2>Турнирная таблица</h2>
       
@@ -763,14 +762,12 @@
         <button onclick="showLeagueTable('table-2015-2016-B')">2015-2016 (B)</button>
       </div>
 
-      <!-- Таблица 2011-2012 -->
       <div class="table-container" id="table-2011-2012" style="display: block;">
         <h3 class="table-title">2011–2012</h3>
         <table>
           <thead>
             <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th>
-              <th>ГЗ</th><th>ГП</th><th>+/-</th><th>О</th>
+              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>О</th>
             </tr>
           </thead>
           <tbody>
@@ -781,8 +778,7 @@
                   <span>KRG</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -791,21 +787,18 @@
                   <span>JARAS 11</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Таблица 2013-2014 A -->
       <div class="table-container" id="table-2013-2014-A" style="display: none;">
         <h3 class="table-title">2013–2014 – Дивизион A</h3>
         <table>
           <thead>
             <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th>
-              <th>ГЗ</th><th>ГП</th><th>+/-</th><th>О</th>
+              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>О</th>
             </tr>
           </thead>
           <tbody>
@@ -816,8 +809,7 @@
                   <span>ALGABAS</span>
                 </div>
               </td>
-              <td>1</td><td>1</td><td>0</td><td>0</td>
-              <td>2</td><td>1</td><td>+1</td><td>3</td>
+              <td>1</td><td>1</td><td>0</td><td>0</td><td>3</td>
             </tr>
             <tr>
               <td>
@@ -826,8 +818,7 @@
                   <span>ZHAYIK</span>
                 </div>
               </td>
-              <td>1</td><td>0</td><td>0</td><td>1</td>
-              <td>1</td><td>2</td><td>-1</td><td>0</td>
+              <td>1</td><td>0</td><td>0</td><td>1</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -836,8 +827,7 @@
                   <span>JARAS</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -846,21 +836,18 @@
                   <span>KRG</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Таблица 2013-2014 B -->
       <div class="table-container" id="table-2013-2014-B" style="display: none;">
         <h3 class="table-title">2013–2014 – Дивизион B</h3>
         <table>
           <thead>
             <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th>
-              <th>ГЗ</th><th>ГП</th><th>+/-</th><th>О</th>
+              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>О</th>
             </tr>
           </thead>
           <tbody>
@@ -871,8 +858,7 @@
                   <span>FOOTBALL TIME C</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -881,8 +867,7 @@
                   <span>YMIT</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -891,8 +876,7 @@
                   <span>ALGABAS DARINSK</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -901,76 +885,154 @@
                   <span>ATLANTA CXI</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Таблица 2015-2016 A -->
       <div class="table-container" id="table-2015-2016-A" style="display: none;">
         <h3 class="table-title">2015–2016 – Дивизион A</h3>
         <table>
           <thead>
             <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th>
-              <th>ГЗ</th><th>ГП</th><th>+/-</th><th>О</th>
+              <th>Поз.</th>
+              <th>Команда</th>
+              <th>И</th>
+              <th>В</th><th>Н</th><th>П</th>
+              <th>Очки</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td>1</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 46" class="team-logo">
+                  <span>AQJAIYQ JAS 46</span>
+                </div>
+              </td>
+              <td>11</td><td>10</td><td>0</td><td>1</td><td>30</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Football Time.PNG" alt="FOOTBALL TIME" class="team-logo">
+                  <span>FOOTBALL TIME</span>
+                </div>
+              </td>
+              <td>9</td><td>7</td><td>1</td><td>1</td><td>22</td>
+              </tr>
+            <tr>
+              <td>3</td>
               <td>
                 <div class="team-logo-container">
                   <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS JELEAVO" class="team-logo">
                   <span>AQJAIYQ JAS JELEAVO</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>10</td><td>7</td><td>1</td><td>2</td><td>22</td>
             </tr>
             <tr>
+              <td>4</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Baiterek.PNG" alt="BAITEREK JAS" class="team-logo">
+                  <span>BAITEREK JAS</span>
+                </div>
+              </td>
+              <td>10</td><td>6</td><td>2</td><td>2</td><td>20</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Arystan.PNG" alt="ARYSTAN" class="team-logo">
+                  <span>ARYSTAN</span>
+                </div>
+              </td>
+              <td>9</td><td>6</td><td>1</td><td>2</td><td>19</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Algabas.PNG" alt="ALGABAS" class="team-logo">
+                  <span>ALGABAS</span>
+                </div>
+              </td>
+              <td>10</td><td>6</td><td>1</td><td>3</td><td>19</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Zhayik Jastary.PNG" alt="JAYIQ JASTARY" class="team-logo">
+                  <span>JAYIQ JASTARY</span>
+                </div>
+              </td>
+              <td>10</td><td>5</td><td>0</td><td>5</td><td>15</td>
+            </tr>
+            <tr>
+              <td>8</td>
               <td>
                 <div class="team-logo-container">
                   <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
                   <span>ALGABAS DARINSK</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>8</td><td>4</td><td>0</td><td>4</td><td>12</td>
             </tr>
             <tr>
+              <td>9</td>
               <td>
                 <div class="team-logo-container">
-                  <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS" class="team-logo">
-                  <span>AQJAIYQ JAS</span>
+                  <img src="Umit.PNG" alt="YMIT" class="team-logo">
+                  <span>YMIT</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>10</td><td>3</td><td>0</td><td>7</td><td>9</td>
             </tr>
             <tr>
+              <td>10</td>
               <td>
                 <div class="team-logo-container">
-                  <img src="Nomad.PNG" alt="NOMAD" class="team-logo">
-                  <span>NOMAD</span>
+                  <img src="Atlanta FC.PNG" alt="ATLANTA ДЕРКУЛ" class="team-logo">
+                  <span>ATLANTA ДЕРКУЛ</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>11</td><td>0</td><td>2</td><td>9</td><td>2</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="KRG.PNG" alt="KRG" class="team-logo">
+                  <span>KRG</span>
+                </div>
+              </td>
+              <td>11</td><td>0</td><td>2</td><td>9</td><td>2</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>
+                <div class="team-logo-container">
+                  <span>ФШ ГЭЛАКСИ</span>
+                </div>
+              </td>
+              <td>11</td><td>0</td><td>2</td><td>9</td><td>2</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Таблица 2015-2016 B -->
       <div class="table-container" id="table-2015-2016-B" style="display: none;">
         <h3 class="table-title">2015–2016 – Дивизион B</h3>
         <table>
           <thead>
             <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th>
-              <th>ГЗ</th><th>ГП</th><th>+/-</th><th>О</th>
+              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>О</th>
             </tr>
           </thead>
           <tbody>
@@ -981,8 +1043,7 @@
                   <span>SD FAMILY</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -991,8 +1052,7 @@
                   <span>NOMAD</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -1001,8 +1061,7 @@
                   <span>AQJAIYQ JAS 2 KOLLEDJ</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
             <tr>
               <td>
@@ -1011,8 +1070,7 @@
                   <span>NOMAD 15</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
             </tr>
           </tbody>
         </table>
@@ -1059,7 +1117,11 @@
       document.querySelectorAll('#schedule .division-buttons button').forEach(btn => {
         btn.classList.remove('active');
       });
-      event.target.classList.add('active');
+      // event.target is undefined when called programmatically, handle this
+      const targetButton = document.querySelector(`#schedule .division-buttons button[onclick="showDivision('${divId}')"]`);
+      if (targetButton) {
+        targetButton.classList.add('active');
+      }
     }
     
     // League Table Navigation
@@ -1073,7 +1135,11 @@
       document.querySelectorAll('#table .division-buttons button').forEach(btn => {
         btn.classList.remove('active');
       });
-      event.target.classList.add('active');
+      // event.target is undefined when called programmatically, handle this
+      const targetButton = document.querySelector(`#table .division-buttons button[onclick="showLeagueTable('${tableId}')"]`);
+      if (targetButton) {
+        targetButton.classList.add('active');
+      }
     }
     
     // Initialize
@@ -1085,9 +1151,8 @@
       }
       
       // Set default active page and division
-      showPage('schedule');
-      showDivision('2011-2012');
-      showLeagueTable('table-2011-2012');
+      showPage('schedule'); // This will call showDivision('2011-2012')
+      showLeagueTable('table-2011-2012'); // This will call showLeagueTable('table-2011-2012')
     });
   </script>
 </body>
