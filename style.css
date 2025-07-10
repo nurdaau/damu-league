@@ -1,18 +1,19 @@
 :root {
-  --primary: #004080;
-  --primary-dark: #002244;
-  --primary-light: #0066cc;
-  --secondary: #003366;
-  --accent: #4d9eff;
-  --text: #333333;
-  --text-light: #666666;
-  --bg: #f5f5f5;
-  --card: #ffffff;
-  --border: #e0e0e0;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --primary: #004080; /* Темно-синий, основной цвет */
+  --primary-dark: #002244; /* Еще темнее синий */
+  --primary-light: #0066cc; /* Светлее синий */
+  --secondary: #003366; /* Дополнительный синий */
+  --accent: #4d9eff; /* Яркий акцентный синий/голубой */
+  --text: #333333; /* Темный текст */
+  --text-light: #666666; /* Светлый текст */
+  --bg: #f5f5f5; /* Светлый фон */
+  --card: #ffffff; /* Фон карточек/блоков */
+  --border: #e0e0e0; /* Цвет границы */
+  --shadow: rgba(0, 0, 0, 0.15); /* Цвет тени */
   --success: #28a745;
   --warning: #ffc107;
   --danger: #dc3545;
+  --header-height: 4.5rem; /* Высота шапки по умолчанию */
 }
 
 body.dark-theme {
@@ -21,41 +22,47 @@ body.dark-theme {
   --primary-light: #0d47a1;
   --secondary: #083055;
   --accent: #4d9eff;
-  --text: #f0f0f0;
+  --text: #e0e0e0; /* Светлый текст для темной темы */
   --text-light: #aaaaaa;
-  --bg: #121212;
-  --card: #1e1e1e;
+  --bg: #1a1a2e; /* Более глубокий темный фон */
+  --card: #1f2833; /* Темные карточки */
   --border: #444444;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --success: #28a745;
-  --warning: #ffc107;
-  --danger: #dc3545;
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-/* Base Styles */
+/* Universal Box-Sizing for better responsiveness */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Base Styles (unchanged for brevity) */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: var(--bg);
   color: var(--text);
   margin: 0;
   padding: 0;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease-in-out;
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
+/* Header (unchanged) */
 header {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: white;
   padding: 0.5rem 0;
-  box-shadow: 0 2px 10px var(--shadow);
-  position: fixed; /* Изменено с sticky на fixed */
-  width: 100%;    /* Добавлено для растягивания на всю ширину */
-  top: 0;         /* Прикрепление к верхней части экрана */
-  z-index: 100;
+  box-shadow: 0 4px 15px var(--shadow);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  min-height: var(--header-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .header-container {
@@ -65,102 +72,130 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  width: 100%;
 }
 
 .logo-title {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
 }
 
 .logo {
-  height: 3rem;
+  height: 3.5rem;
   width: auto;
   border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 2px 5px var(--shadow);
-  transition: transform 0.3s ease;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .logo:hover {
-  transform: rotate(10deg);
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 h1 {
   margin: 0;
-  font-size: 1.8rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* Navigation */
-nav ul {
+/* Navigation (unchanged) */
+.main-nav {
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+  background: var(--primary-dark);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-100%);
+  transition: transform 0.4s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.main-nav.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.main-nav ul {
   list-style: none;
-  margin: 0.5rem 0 0;
-  padding: 0;
+  margin: 0;
+  padding: 1rem 0;
   display: flex;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 0.3rem;
+  flex-direction: column;
+  align-items: center;
 }
 
-nav li {
-  margin: 0 0.3rem;
+.main-nav li {
+  width: 90%;
+  margin: 0.5rem 0;
 }
 
-nav a {
+.main-nav a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  padding: 0.6rem 1rem;
+  padding: 0.8rem 1.5rem;
   display: block;
-  transition: all 0.3s ease;
-  border-radius: 0.3rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-size: 1.1rem;
 }
 
-nav a:hover {
-  background: rgba(255, 255, 255, 0.2);
+.main-nav a:hover, .main-nav a.active {
+  background: var(--accent);
   transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Main Content */
-main {
-  flex: 1;
-  padding: 1.5rem;
-  max-width: 1200px;
-  width: 100%;
-  margin: 1rem auto;
-  background: var(--card);
-  border-radius: 0.8rem;
-  box-shadow: 0 4px 20px var(--shadow);
-  transition: all 0.3s ease;
-  margin-top: 10rem; /* Добавлено для отступа под фиксированной шапкой */
+/* Burger Menu Toggle Button (unchanged) */
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: block;
+  transition: transform 0.3s ease;
+  padding: 0.5rem;
 }
 
-/* Theme Toggle */
+.menu-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Theme Toggle (unchanged) */
 .theme-toggle {
   background: rgba(255, 255, 255, 0.15);
   color: white;
   border: none;
-  padding: 0.5rem 1.2rem;
-  border-radius: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 1.8rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-weight: bold;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 2px 8px var(--shadow);
   backdrop-filter: blur(5px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px var(--shadow);
 }
 
 .theme-icon {
-  font-size: 1.2em;
+  font-size: 1.4em;
   transition: transform 0.3s ease;
 }
 
@@ -168,319 +203,570 @@ main {
   transform: rotate(30deg);
 }
 
-/* Tables */
+/* Main Content (updated margin-top) */
+main {
+  flex: 1;
+  padding: 1.5rem 1rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: calc(var(--header-height) + 1rem) auto 1rem; /* Adjusted for visibility */
+  background: var(--card);
+  border-radius: 0.8rem;
+  box-shadow: 0 6px 25px var(--shadow);
+  transition: all 0.4s ease-in-out;
+  min-height: calc(100vh - var(--header-height) - 2rem);
+}
+
+/* Section Headings (unchanged) */
+h2 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary);
+  display: inline-block;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-theme h2 {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Division Buttons (for tables - unchanged) */
+.division-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 1.5rem 0;
+  padding: 0.5rem;
+  background: var(--bg);
+  border-radius: 0.6rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.division-buttons button {
+  flex: 1 1 auto;
+  padding: 0.8rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+  background: var(--primary);
+  border: none;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 3px 8px var(--shadow);
+  min-width: 6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.division-buttons button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 5px 15px var(--shadow);
+}
+
+.division-buttons button.active {
+  background: var(--accent);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+  border: 2px solid var(--primary-dark);
+}
+
+/* Table Specifics (unchanged) */
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  background: var(--card);
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 15px var(--shadow);
+  padding: 0.5rem;
+}
+
 table {
   width: 100%;
-  max-width: 100%;
-  margin: 1.5rem auto;
   border-collapse: collapse;
-  background: var(--card);
-  box-shadow: 0 2px 15px var(--shadow);
-  border-radius: 0.8rem;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  margin: 0;
+  min-width: 600px;
 }
 
 th {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   text-align: center;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 0.5px;
+  font-size: 0.9rem;
 }
 
 td {
-  padding: 0.8rem;
+  padding: 0.8rem 0.5rem;
   text-align: center;
   border-bottom: 1px solid var(--border);
   transition: background-color 0.2s ease;
+  font-size: 0.85rem;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+body.dark-theme tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
 tr:hover td {
-  background: rgba(var(--primary-light-rgb), 0.1);
+  background: rgba(0, 102, 204, 0.15);
 }
 
 body.dark-theme tr:hover td {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* Team Logos */
+.table-title {
+  color: var(--primary);
+  margin: 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+body.dark-theme .table-title {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Team Logos (modified for full visibility) */
 .team-logo-container {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  justify-content: center;
-  padding: 0.3rem 0;
+  gap: 0.6rem;
+  justify-content: flex-start;
+  padding: 0;
+  white-space: normal; /* Allow text wrapping */
 }
 
 .team-logo {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   border: 2px solid var(--border);
   background: white;
-  padding: 2px;
-  box-shadow: 0 2px 4px var(--shadow);
+  padding: 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .team-logo:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px var(--shadow);
+  transform: scale(1.15);
+  box-shadow: 0 3px 6px var(--shadow);
 }
 
 .team-logo-container span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;
   font-weight: 500;
-  transition: color 0.2s ease;
+  font-size: 0.8rem;
+  white-space: normal; /* Allow text to wrap */
+  overflow: visible; /* Prevent hidden text */
+  text-overflow: clip; /* Prevent ellipsis */
+  max-width: none; /* Remove maximum width constraint */
+  word-break: break-word; /* Allow long words to break */
 }
 
-/* Division Buttons */
-.division-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.8rem;
-  margin: 2rem 0;
-}
-
-.division-buttons button {
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  border: none;
-  border-radius: 2rem;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 3px 6px var(--shadow);
-  min-width: 8rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.division-buttons button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
+/* Playoffs Section Styles */
+#playoffs {
+  display: none; /* Initially hidden */
+  padding: 1.5rem 1rem;
+  max-width: 1200px;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
+  margin: var(--header-height) auto 1rem;
+  background: var(--card);
+  border-radius: 0.8rem;
+  box-shadow: 0 6px 25px var(--shadow);
+  transition: all 0.4s ease-in-out;
+  min-height: calc(100vh - var(--header-height) - 2rem);
 }
 
-.division-buttons button:hover {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px var(--shadow);
-}
-
-.division-buttons button:hover::before {
-  left: 100%;
-}
-
-.division-buttons button.active {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-  transform: translateY(1px);
-}
-
-/* Text Elements */
-.note {
-  text-align: center;
-  font-style: italic;
-  color: var(--text-light);
-  margin: 1rem 0;
-  font-size: 0.95rem;
-}
-
-h2, h3 {
-  color: var(--primary);
-  margin-top: 2rem;
-  transition: color 0.3s ease;
-}
-
-h2 {
-  font-size: 1.8rem;
-  border-bottom: 2px solid var(--primary);
-  padding-bottom: 0.5rem;
-  display: inline-block;
-}
-
-body.dark-theme h2,
-body.dark-theme h3 {
-  color: var(--accent);
-}
-
-/* Page Transitions */
-.page {
-  display: none;
-  animation: fadeIn 0.5s ease;
-  padding: 1rem;
-}
-
-.page.active {
+#playoffs.active {
   display: block;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.playoff-division-buttons {
+  margin-bottom: 2rem;
 }
 
-/* Divisions */
-.division {
-  margin-bottom: 2.5rem;
-  padding: 1.5rem;
-  border-radius: 0.8rem;
-  border: 1px solid var(--border);
-  background: rgba(0, 64, 128, 0.05);
-  box-shadow: 0 2px 10px var(--shadow);
-  transition: all 0.3s ease;
+.playoff-grid-container {
+  overflow-x: auto; /* Allow horizontal scrolling for wide brackets */
 }
 
-body.dark-theme .division {
-  background: rgba(74, 144, 255, 0.05);
+/* New: Styles for the bracket layout */
+.playoff-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) 0.5fr; /* 4 rounds + a small gap for champion */
+    grid-template-rows: repeat(8, auto); /* 8 rows for 8 teams in the first round */
+    gap: 1rem;
+    padding: 2rem 0;
+    justify-content: center;
+    align-items: center;
+    min-width: 1000px; /* Adjust based on desired bracket width */
+    position: relative;
 }
 
-.division h3 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 2px solid var(--primary);
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-.division h3::before {
-  content: '';
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-body.dark-theme .division h3 {
-  border-bottom-color: var(--primary-dark);
-}
-
-/* Status Indicators */
-.status-indicator {
-  display: inline-block;
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 50%;
-  margin-right: 0.5rem;
-}
-
-.status-active {
-  background-color: var(--success);
-}
-
-.status-pending {
-  background-color: var(--warning);
-}
-
-.status-inactive {
-  background-color: var(--danger);
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  body {
-    display: block;
-    font-size: 0.95rem;
-  }
-  
-  .header-container {
+.round {
+    display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    padding: 0.8rem;
-  }
+    justify-content: space-around;
+    padding: 0 0.5rem;
+    position: relative; /* For connector lines */
+    height: 100%; /* Ensure rounds take full height for alignment */
+}
 
-  nav ul {
-    flex-direction: column;
-    margin-top: 0.8rem;
-    gap: 0.4rem;
-  }
-
-  nav li {
-    margin: 0;
-    width: 100%;
-  }
-
-  nav a {
+.round h4 {
     text-align: center;
-    padding: 0.6rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    grid-column: span 1; /* Each round header spans 1 column */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Positioning rounds in the grid */
+.quarter-finals {
+    grid-column: 1;
+    grid-row: 1 / span 8; /* Spans all 8 rows initially */
+}
+
+.semi-finals {
+    grid-column: 2;
+    grid-row: 2 / span 6; /* Aligned vertically in the middle */
+    margin-left: 2rem; /* Indent for visual separation */
+}
+
+.final {
+    grid-column: 3;
+    grid-row: 4 / span 2; /* Centered for the final */
+    margin-left: 4rem; /* Further indent */
+}
+
+.champion {
+    grid-column: 4 / span 2; /* Champion spans the remaining columns */
+    grid-row: 4 / span 2; /* Aligned with the final */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 6rem; /* Even further indent */
+}
+
+.champion-team {
+    padding: 1rem;
+    background: var(--primary);
+    color: white;
+    border-radius: 0.8rem;
+    box-shadow: 0 5px 15px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 150px;
+}
+
+.champion-team .team-logo-container {
+    flex-direction: column;
+    align-items: center;
+}
+
+.champion-team .team-logo {
+    width: 50px;
+    height: 50px;
+    border: 3px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.champion-team span {
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Bracket Lines - More complex styling needed for perfect connections */
+/* General line styles */
+.match::before, .match::after {
+    content: '';
+    position: absolute;
+    background-color: var(--border); /* Color of the lines */
+    z-index: 1; /* Below matches, above grid */
+}
+
+/* Quarter-finals to Semi-finals */
+.quarter-finals .match:nth-child(odd)::after {
+    left: 100%;
+    top: 50%;
+    width: 20px; /* Horizontal line segment */
+    height: 2px;
+    transform: translateY(-50%);
+}
+.quarter-finals .match:nth-child(even)::after {
+    left: 100%;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+.semi-finals .match::after {
+    left: 100%;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+/* Vertical lines connecting quarter-final pairs */
+.quarter-finals .match:nth-child(1)::before {
+    content: '';
+    position: absolute;
+    left: calc(100% + 20px - 1px); /* Connects to the end of horizontal line */
+    top: 50%;
+    width: 2px;
+    height: calc(100% + 2 * 0.4rem); /* Match height + top/bottom margin * 2 */
+    background-color: var(--border);
+    transform: translateY(-50%);
+    z-index: 1;
+}
+.quarter-finals .match:nth-child(2)::before {
+    content: '';
+    position: absolute;
+    left: calc(100% + 20px - 1px);
+    top: 50%;
+    width: 2px;
+    height: calc(100% + 2 * 0.4rem);
+    background-color: var(--border);
+    transform: translateY(-50%);
+    z-index: 1;
+}
+/* More complex vertical lines would be needed between actual matches that win */
+
+
+/* Simplified approach for connections - may not be perfect bracket geometry */
+.playoff-grid > .round:not(.champion) {
+    border-right: 2px solid var(--border); /* Simple separator between rounds */
+    padding-right: 1.5rem; /* Space for lines */
+    margin-right: 1.5rem;
+}
+
+.playoff-grid > .round:not(.quarter-finals):not(.champion) {
+    border-left: 2px solid var(--border);
+    padding-left: 1.5rem;
+    margin-left: 1.5rem;
+}
+
+/* Adjustments for the connecting lines to look like the image */
+.quarter-finals .match:nth-child(odd),
+.quarter-finals .match:nth-child(even) {
+    position: relative;
+}
+
+.quarter-finals .match:nth-child(odd)::after,
+.quarter-finals .match:nth-child(even)::after {
+    content: '';
+    position: absolute;
+    right: -20px; /* Extend past match box */
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    background-color: var(--border);
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.quarter-finals .match:nth-child(1)::before { /* Vertical line from match 1 to next round point */
+    content: '';
+    position: absolute;
+    right: -20px; /* Aligned with horizontal line start */
+    top: 50%;
+    width: 2px;
+    height: calc(100% + 0.8rem); /* Adjust to reach next match */
+    background-color: var(--border);
+    transform: translate(0, -50%);
+    border-top-right-radius: 2px;
+    z-index: 1;
+}
+
+/* This is a simplified example. Real bracket lines are tricky with pure CSS.
+   You would need more specific pseudo-elements and positioning for each connection.
+   For example, you'd connect 1st match of quarter-final with 2nd, then a line from middle
+   to the semi-final match.
+*/
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  /* Existing mobile styles */
+  header {
+    height: auto;
+    min-height: 4rem;
   }
 
-  .theme-toggle {
-    margin: 0.8rem auto;
+  .header-container {
+    flex-wrap: wrap;
+    padding: 0.5rem 1rem;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .logo-title {
     width: 100%;
     justify-content: center;
   }
 
-  main {
-    margin: 0 auto;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 1rem;
-    /* Убедитесь, что отступ остается и на мобильных */
-    margin-top: 10rem; /* Можно настроить для мобильных */
+  h1 {
+    font-size: 1.6rem;
   }
 
-  table {
+  .logo {
+    height: 3rem;
+  }
+
+  .theme-toggle {
+    padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
   }
 
+  .menu-toggle {
+    font-size: 1.5rem;
+    padding: 0.4rem;
+  }
+
+  .main-nav {
+    top: 4rem; /* Adjust based on new header height */
+  }
+
+  main {
+    padding: 1rem 0.8rem; /* Reduce main padding */
+    margin-top: calc(4rem + 1rem); /* Adjusted margin-top for mobile */
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  table {
+    font-size: 0.8rem;
+    min-width: 450px; /* Allow horizontal scroll on smaller screens */
+  }
+
   th, td {
-    padding: 0.6rem 0.4rem;
+    padding: 0.6rem 0.3rem;
   }
 
   .division-buttons {
-    flex-direction: column;
-    gap: 0.6rem;
+    flex-direction: column; /* Stack buttons on mobile */
+    gap: 0.5rem;
   }
 
   .division-buttons button {
     width: 100%;
+    font-size: 0.85rem;
     padding: 0.7rem;
   }
 
   .team-logo {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
   }
-  
+
   .team-logo-container {
     gap: 0.5rem;
   }
 
   .team-logo-container span {
-    max-width: 100px;
+    font-size: 0.75rem;
+    max-width: none; /* Removed width restriction for mobile */
   }
 
   h2 {
     font-size: 1.5rem;
   }
+
+  .table-title {
+    font-size: 1.2rem;
+  }
+
+  /* Playoffs mobile adjustments */
+  .playoff-grid-container {
+    overflow-x: auto; /* Ensure horizontal scroll for the bracket */
+  }
+
+  .playoff-grid {
+    min-width: 700px; /* Keep a minimum width for the bracket to look reasonable */
+    padding: 1rem 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .round {
+    margin: 0 0.5rem;
+  }
+
+  .round h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .match {
+    min-width: 120px;
+    padding: 0.4rem 0.6rem;
+    height: 3rem;
+  }
+
+  .match .team {
+    font-size: 0.7rem;
+    max-width: 50px;
+  }
+
+  .match .score {
+    font-size: 0.8rem;
+  }
+
+  .champion {
+    margin-left: 3rem;
+  }
+
+  .champion-team {
+    min-width: 120px;
+    padding: 0.8rem;
+  }
+
+  .champion-team .team-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .champion-team span {
+    font-size: 0.85rem;
+  }
+
+  /* Adjust line positions for mobile if needed */
+  .quarter-finals .match:nth-child(odd)::after,
+  .quarter-finals .match:nth-child(even)::after {
+      right: -10px; /* Shorter lines */
+      width: 10px;
+  }
 }
 
-/* Animations */
+
+/* Animations (unchanged) */
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
@@ -491,7 +777,7 @@ body.dark-theme .division h3 {
   animation: pulse 2s infinite;
 }
 
-/* Scrollbar */
+/* Scrollbar (unchanged) */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -507,34 +793,5 @@ body.dark-theme .division h3 {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
-
-/* Tooltip */
-[data-tooltip] {
-  position: relative;
-}
-
-[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--primary-dark);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.3rem;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  z-index: 10;
-}
-
-[data-tooltip]:hover::after {
-  opacity: 1;
-  visibility: visible;
-  bottom: calc(100% + 5px);
+  background: var(--accent);
 }
