@@ -4,436 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Даму Лига</title>
-<style>
-    :root {
-      --primary: #004080;
-      --primary-dark: #002244;
-      --primary-light: #0066cc;
-      --secondary: #003366;
-      --accent: #4d9eff;
-      --text: #333333;
-      --text-light: #666666;
-      --bg: #f5f5f5;
-      --card: #ffffff;
-      --border: #e0e0e0;
-      --shadow: rgba(0, 0, 0, 0.1);
-      --success: #28a745;
-      --warning: #ffc107;
-      --danger: #dc3545;
-    }
-
-    body.dark-theme {
-      --primary: #0a2d4d;
-      --primary-dark: #061f3a;
-      --primary-light: #0d47a1;
-      --secondary: #083055;
-      --accent: #4d9eff;
-      --text: #f0f0f0;
-      --text-light: #aaaaaa;
-      --bg: #121212;
-      --card: #1e1e1e;
-      --border: #444444;
-      --shadow: rgba(0, 0, 0, 0.3);
-    }
-
-    /* Стили для логотипов команд */
-    .team-logo-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: center;
-    }
-
-    .team-logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: contain;
-      border: 2px solid var(--border);
-      background: white;
-      padding: 2px;
-      transition: all 0.3s ease;
-    }
-
-    .team-logo:hover {
-      transform: scale(1.1);
-      box-shadow: 0 4px 8px var(--shadow);
-    }
-
-    .team-logo-container span {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 150px;
-      font-weight: 500;
-    }
-
-    /* Остальные стили */
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 0;
-      transition: all 0.3s ease;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
-      padding: 0.5rem 0;
-      box-shadow: 0 2px 10px var(--shadow);
-      /* Изменение здесь: */
-      position: fixed; /* Изменено с sticky на fixed */
-      width: 100%;    /* Добавлено для растягивания на всю ширину */
-      top: 0;         /* Прикрепление к верхней части экрана */
-      z-index: 100;
-    }
-
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    .logo-title {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .logo {
-      height: 3rem;
-      width: auto;
-      border-radius: 50%;
-      border: 2px solid white;
-      box-shadow: 0 2px 5px var(--shadow);
-      transition: transform 0.3s ease;
-    }
-
-    .logo:hover {
-      transform: rotate(10deg);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0.5rem 0 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: 0.3rem;
-    }
-
-    nav li {
-      margin: 0 0.3rem;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 0.6rem 1rem;
-      display: block;
-      transition: all 0.3s ease;
-      border-radius: 0.3rem;
-    }
-
-    nav a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-    }
-
-    main {
-      flex: 1;
-      padding: 1.5rem;
-      max-width: 1200px;
-      width: 100%;
-      margin: 1rem auto;
-      background: var(--card);
-      border-radius: 0.8rem;
-      box-shadow: 0 4px 20px var(--shadow);
-      /* Добавлено для отступа под фиксированной шапкой */
-      margin-top: 10rem; /* Отрегулируйте это значение по необходимости */
-    }
-
-    .theme-toggle {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      border: none;
-      padding: 0.5rem 1.2rem;
-      border-radius: 1.5rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .theme-toggle:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .theme-icon {
-      font-size: 1.2em;
-      transition: transform 0.3s ease;
-    }
-
-    .theme-toggle:hover .theme-icon {
-      transform: rotate(30deg);
-    }
-
-    table {
-      width: 100%;
-      max-width: 100%;
-      margin: 1.5rem auto;
-      border-collapse: collapse;
-      background: var(--card);
-      box-shadow: 0 2px 15px var(--shadow);
-      border-radius: 0.8rem;
-      overflow: hidden;
-    }
-
-    th {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    td {
-      padding: 0.8rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      transition: background-color 0.2s ease;
-    }
-
-    tr:hover td {
-      background: rgba(0, 102, 204, 0.1);
-    }
-
-    body.dark-theme tr:hover td {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .division-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.8rem;
-      margin: 2rem 0;
-    }
-
-    .division-buttons button {
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      font-weight: bold;
-      color: white;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border: none;
-      border-radius: 2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px var(--shadow);
-      min-width: 8rem;
-    }
-
-    .division-buttons button:hover {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px var(--shadow);
-    }
-
-    .division-buttons button.active {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .note {
-      text-align: center;
-      font-style: italic;
-      color: var(--text-light);
-      margin: 1rem 0;
-    }
-
-    h2, h3 {
-      color: var(--primary);
-      margin-top: 1.5rem;
-    }
-
-    h2 {
-      font-size: 1.8rem;
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 0.5rem;
-    }
-
-    body.dark-theme h2,
-    body.dark-theme h3 {
-      color: var(--accent);
-    }
-
-    .page {
-      display: none;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .division {
-      margin-bottom: 2.5rem;
-      padding: 1.5rem;
-      border-radius: 0.8rem;
-      border: 1px solid var(--border);
-      background: rgba(0, 64, 128, 0.05);
-      box-shadow: 0 2px 10px var(--shadow);
-    }
-
-    body.dark-theme .division {
-      background: rgba(74, 144, 255, 0.05);
-    }
-
-    .division h3 {
-      margin-top: 0;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.8rem;
-      border-bottom: 2px solid var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    body.dark-theme .division h3 {
-      border-bottom-color: var(--primary-dark);
-    }
-
-    .table-container {
-      margin-bottom: 2rem;
-    }
-
-    .table-title {
-      color: var(--primary);
-      margin: 1.5rem 0 0.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--primary);
-    }
-
-    body.dark-theme .table-title {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    @media (max-width: 768px) {
-      body {
-        display: block;
-        font-size: 0.95rem;
-      }
-      
-      .header-container {
-        flex-direction: column;
-        gap: 0.8rem;
-        padding: 0.8rem;
-      }
-
-      nav ul {
-        flex-direction: column;
-        margin-top: 0.8rem;
-        gap: 0.4rem;
-      }
-
-      nav li {
-        margin: 0;
-        width: 100%;
-      }
-
-      nav a {
-        text-align: center;
-        padding: 0.6rem;
-      }
-
-      .theme-toggle {
-        margin: 0.8rem auto;
-        width: 100%;
-        justify-content: center;
-      }
-
-      main {
-        margin: 0 auto;
-        border-radius: 0;
-        box-shadow: none;
-        padding: 1rem;
-        /* Убедитесь, что отступ остается и на мобильных */
-        margin-top: 10rem; /* Можно настроить для мобильных */
-      }
-
-      table {
-        font-size: 0.9rem;
-      }
-
-      th, td {
-        padding: 0.6rem 0.4rem;
-      }
-
-      .division-buttons {
-        flex-direction: column;
-        gap: 0.6rem;
-      }
-
-      .division-buttons button {
-        width: 100%;
-        padding: 0.7rem;
-      }
-
-      .team-logo {
-        width: 26px;
-        height: 26px;
-      }
-      
-      .team-logo-container {
-        gap: 0.5rem;
-      }
-
-      .team-logo-container span {
-        max-width: 100px;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="DAMU.PNG">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <header>
@@ -442,464 +16,43 @@
         <img src="DAMU.PNG" alt="Логотип Даму Лиги" class="logo">
         <h1>Даму Лига</h1>
       </div>
-      <button class="theme-toggle" onclick="toggleTheme()">
-        <span class="theme-icon">🌓</span> Сменить тему
+      <button class="theme-toggle" aria-label="Сменить тему">
+        <span class="theme-icon">🌓</span> 
+      </button>
+      <button class="menu-toggle" aria-label="Открыть меню">
+        <i class="fas fa-bars"></i>
       </button>
     </div>
     
-    <nav>
+    <nav class="main-nav">
       <ul>
-        <li><a href="#" onclick="showPage('schedule')">Расписание</a></li>
-        <li><a href="#" onclick="showPage('table')">Турнирная таблица</a></li>
+        <li><a href="#" data-page="table">Турнирная таблица</a></li>
+        <li><a href="#" data-page="playoffs">Плей-офф</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section id="schedule" class="page active">
-      <h2>Расписание матчей</h2>
-      <p class="note">Циолковский 2Б</p>
-      
-      <div class="division-buttons">
-        <button onclick="showDivision('2011-2012')" class="active">2011-2012</button>
-        <button onclick="showDivision('2013-2014-A')">2013-2014 (A)</button>
-        <button onclick="showDivision('2013-2014-B')">2013-2014 (B)</button>
-        <button onclick="showDivision('2015-2016-A')">2015-2016 (A)</button>
-        <button onclick="showDivision('2015-2016-B')">2015-2016 (B)</button>
-      </div>
-      
-      <div id="days">
-        <div class="division" id="2011-2012" style="display: block;">
-          <h3>🔴 2011–2012</h3>
-          <table>
-            <thead>
-              <tr><th>Время</th><th>Команда 1</th><th>Команда 2</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>09:00</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="KRG.PNG" alt="KRG" class="team-logo">
-                    <span>KRG</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Jaras.PNG" alt="JARAS 11" class="team-logo">
-                    <span>JARAS 11</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <div class="division" id="2013-2014-A" style="display: none;">
-          <h3>🟡 2013–2014 – Дивизион A</h3>
-          <table>
-            <thead>
-              <tr><th>Время</th><th>Команда 1</th><th>Команда 2</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>09:40</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Jaras.PNG" alt="JARAS" class="team-logo">
-                    <span>JARAS</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="KRG.PNG" alt="KRG" class="team-logo">
-                    <span>KRG</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>10:20</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Zhayik Jastary.PNG" alt="ZHAYIK ZHASTARY" class="team-logo">
-                    <span>ZHAYIK ZHASTARY</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="KRG.PNG" alt="KRG" class="team-logo">
-                    <span>KRG</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>11:00</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Algabas.PNG" alt="ALGABAS" class="team-logo">
-                    <span>ALGABAS</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Zhayik Jastary.PNG" alt="ZHAYIK ZHASTARY" class="team-logo">
-                    <span>ZHAYIK ZHASTARY</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <div class="division" id="2013-2014-B" style="display: none;">
-          <h3>🟢 2013–2014 – Дивизион B</h3>
-          <table>
-            <thead>
-              <tr><th>Время</th><th>Команда 1</th><th>Команда 2</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>11:40</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Football Time.PNG" alt="FOOTBALL TIME C" class="team-logo">
-                    <span>FOOTBALL TIME C</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Umit.PNG" alt="YMIT" class="team-logo">
-                    <span>YMIT</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>12:20</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Umit.PNG" alt="YMIT" class="team-logo">
-                    <span>YMIT</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
-                    <span>ALGABAS DARINSK</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>13:00</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Football Time.PNG" alt="FOOTBALL TIME C" class="team-logo">
-                    <span>FOOTBALL TIME C</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Atlanta FC.PNG" alt="ATLANTA CXI" class="team-logo">
-                    <span>ATLANTA CXI</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <div class="division" id="2015-2016-A" style="display: none;">
-          <h3>🔵 2015–2016 – Дивизион A</h3>
-          <table>
-            <thead>
-              <tr><th>Время</th><th>Команда 1</th><th>Команда 2</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>13:40</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS JELEAVO" class="team-logo">
-                    <span>AQJAIYQ JAS JELEAVO</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
-                    <span>ALGABAS DARINSK</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>14:20</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
-                    <span>ALGABAS DARINSK</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS" class="team-logo">
-                    <span>AQJAIYQ JAS</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>15:00</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Nomad.PNG" alt="NOMAD" class="team-logo">
-                    <span>NOMAD</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
-                    <span>ALGABAS DARINSK</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>15:40</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 46" class="team-logo">
-                    <span>AQJAIYQ JAS 46</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Legion.PNG" alt="LEGION" class="team-logo">
-                    <span>LEGION</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <div class="division" id="2015-2016-B" style="display: none;">
-          <h3>⚪ 2015–2016 – Дивизион B</h3>
-          <table>
-            <thead>
-              <tr><th>Время</th><th>Команда 1</th><th>Команда 2</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>16:20</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="SD Family.PNG" alt="SD FAMILY" class="team-logo">
-                    <span>SD FAMILY</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Nomad.PNG" alt="NOMAD" class="team-logo">
-                    <span>NOMAD</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>17:00</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 2 KOLLEDJ" class="team-logo">
-                    <span>AQJAIYQ JAS 2 KOLLEDJ</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Nomad.PNG" alt="NOMAD 15" class="team-logo">
-                    <span>NOMAD 15</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>17:40</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Nomad.PNG" alt="NOMAD 16" class="team-logo">
-                    <span>NOMAD 16</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 46" class="team-logo">
-                    <span>AQJAIYQ JAS 46</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>18:20</td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 47" class="team-logo">
-                    <span>AQJAIYQ JAS 47</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="team-logo-container">
-                    <img src="Jaras.PNG" alt="JARAS" class="team-logo">
-                    <span>JARAS</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section id="table" class="page">
+    <section id="table" class="page active">
       <h2>Турнирная таблица</h2>
       
       <div class="division-buttons">
-        <button onclick="showLeagueTable('table-2011-2012')" class="active">2011-2012</button>
-        <button onclick="showLeagueTable('table-2013-2014-A')">2013-2014 (A)</button>
-        <button onclick="showLeagueTable('table-2013-2014-B')">2013-2014 (B)</button>
-        <button onclick="showLeagueTable('table-2015-2016-A')">2015-2016 (A)</button>
-        <button onclick="showLeagueTable('table-2015-2016-B')">2015-2016 (B)</button>
+        <button data-table="table-2011-2012" class="active">2011-2012</button>
+        <button data-table="table-2013-2014-A">2013-2014 (A)</button>
+        <button data-table="table-2013-2014-B">2013-2014 (B)</button>
+        <button data-table="table-2015-2016-A">2015-2016 (A)</button>
+        <button data-table="table-2015-2016-B">2015-2016 (B)</button>
       </div>
 
-      <div class="table-container" id="table-2011-2012" style="display: block;">
-        <h3 class="table-title">2011–2012</h3>
+      <div id="table-2011-2012" class="table-container" style="display: block;">
+        <h3 class="table-title">Сезон 2011-2012</h3>
         <table>
           <thead>
             <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>О</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="KRG.PNG" alt="KRG" class="team-logo">
-                  <span>KRG</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Jaras.PNG" alt="JARAS 11" class="team-logo">
-                  <span>JARAS 11</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="table-container" id="table-2013-2014-A" style="display: none;">
-        <h3 class="table-title">2013–2014 – Дивизион A</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>О</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Algabas.PNG" alt="ALGABAS" class="team-logo">
-                  <span>ALGABAS</span>
-                </div>
-              </td>
-              <td>1</td><td>1</td><td>0</td><td>0</td><td>3</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Zhayik Jastary.PNG" alt="ZHAYIK" class="team-logo">
-                  <span>ZHAYIK</span>
-                </div>
-              </td>
-              <td>1</td><td>0</td><td>0</td><td>1</td><td>0</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Jaras.PNG" alt="JARAS" class="team-logo">
-                  <span>JARAS</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="KRG.PNG" alt="KRG" class="team-logo">
-                  <span>KRG</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="table-container" id="table-2013-2014-B" style="display: none;">
-        <h3 class="table-title">2013–2014 – Дивизион B</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>О</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Football Time.PNG" alt="FOOTBALL TIME C" class="team-logo">
-                  <span>FOOTBALL TIME C</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Umit.PNG" alt="YMIT" class="team-logo">
-                  <span>YMIT</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
-                  <span>ALGABAS DARINSK</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Atlanta FC.PNG" alt="ATLANTA CXI" class="team-logo">
-                  <span>ATLANTA CXI</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="table-container" id="table-2015-2016-A" style="display: none;">
-        <h3 class="table-title">2015–2016 – Дивизион A</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Поз.</th>
+              <th>№</th>
               <th>Команда</th>
               <th>И</th>
-              <th>В</th><th>Н</th><th>П</th>
+              <th>Разн.</th>
               <th>Очки</th>
             </tr>
           </thead>
@@ -908,252 +61,1217 @@
               <td>1</td>
               <td>
                 <div class="team-logo-container">
-                  <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 46" class="team-logo">
-                  <span>AQJAIYQ JAS 46</span>
+                  <img src="Jaras.PNG" alt="JARAS 2011" class="team-logo">
+                  <span>JARAS 2011</span>
                 </div>
               </td>
-              <td>11</td><td>10</td><td>0</td><td>1</td><td>30</td>
+              <td>13</td>
+              <td>+30</td>
+              <td>34</td>
             </tr>
             <tr>
               <td>2</td>
               <td>
                 <div class="team-logo-container">
-                  <img src="Football Time.PNG" alt="FOOTBALL TIME" class="team-logo">
-                  <span>FOOTBALL TIME</span>
+                  <img src="Legion.PNG" alt="LEGION 2011-12" class="team-logo">
+                  <span>LEGION 2011-12</span>
                 </div>
               </td>
-              <td>9</td><td>7</td><td>1</td><td>1</td><td>22</td>
-              </tr>
+              <td>13</td>
+              <td>+55</td>
+              <td>31</td>
+            </tr>
             <tr>
               <td>3</td>
               <td>
                 <div class="team-logo-container">
-                  <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS JELEAVO" class="team-logo">
-                  <span>AQJAIYQ JAS JELEAVO</span>
+                  <img src="Arystan.PNG" alt="ARYSTAN 2011-12" class="team-logo">
+                  <span>ARYSTAN 2011-12</span>
                 </div>
               </td>
-              <td>10</td><td>7</td><td>1</td><td>2</td><td>22</td>
+              <td>10</td>
+              <td>+35</td>
+              <td>28</td>
             </tr>
             <tr>
               <td>4</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Umit.PNG" alt="YMIT 2011-12" class="team-logo">
+                  <span>YMIT 2011-12</span>
+                </div>
+              </td>
+              <td>14</td>
+              <td>+9</td>
+              <td>28</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>
+                <div class="team-logo-container">
+                  <span>ALAN AQSAY 2011-12</span>
+                </div>
+              </td>
+              <td>10</td>
+              <td>+44</td>
+              <td>24</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Baiterek.PNG" alt="BAITEREK 2011-12" class="team-logo">
+                  <span>BAITEREK 2011-12</span>
+                </div>
+              </td>
+              <td>11</td>
+              <td>+19</td>
+              <td>24</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 2011-12" class="team-logo">
+                  <span>AQJAIYQ JAS 2011-12</span>
+                </div>
+              </td>
+              <td>13</td>
+              <td>+3</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Zhayik Jastary.PNG" alt="ЖАЙЫҚ ЖАСТАРЫ 2011-12" class="team-logo">
+                  <span>ЖАЙЫҚ ЖАСТАРЫ 2011-12</span>
+                </div>
+              </td>
+              <td>15</td>
+              <td>-9</td>
+              <td>17</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="SD Family.PNG" alt="SD FAMILY 2011-12" class="team-logo">
+                  <span>SD FAMILY 2011-12</span>
+                </div>
+              </td>
+              <td>14</td>
+              <td>-24</td>
+              <td>16</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Football Time.PNG" alt="FOOTBALL TIME A 2011-12" class="team-logo">
+                  <span>FOOTBALL TIME A 2011-12</span>
+                </div>
+              </td>
+              <td>9</td>
+              <td>+22</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Nomad.PNG" alt="NOMAD 2011-12" class="team-logo">
+                  <span>NOMAD 2011-12</span>
+                </div>
+              </td>
+              <td>10</td>
+              <td>+10</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Kairat.PNG" alt="KAIRAT 2011-12" class="team-logo">
+                  <span>KAIRAT 2011-12</span>
+                </div>
+              </td>
+              <td>10</td>
+              <td>-11</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Legion.PNG" alt="LEGION B 2011-12" class="team-logo">
+                  <span>LEGION B 2011-12</span>
+                </div>
+              </td>
+              <td>12</td>
+              <td>-12</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Algabas.PNG" alt="ALGABAS DARINSK 2011-12" class="team-logo">
+                  <span>ALGABAS DARINSK 2011-12</span>
+                </div>
+              </td>
+              <td>12</td>
+              <td>0</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="KRG.PNG" alt="KRG 2011-12" class="team-logo">
+                  <span>KRG 2011-12</span>
+                </div>
+              </td>
+              <td>12</td>
+              <td>-25</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Jaras.PNG" alt="JARAS 2012" class="team-logo">
+                  <span>JARAS 2012</span>
+                </div>
+              </td>
+              <td>11</td>
+              <td>-15</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>17</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Algabas.PNG" alt="ALGABAS 2011-12" class="team-logo">
+                  <span>ALGABAS 2011-12</span>
+                </div>
+              </td>
+              <td>10</td>
+              <td>-29</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>18</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Jenimpaz.PNG" alt="JENIMPAZ 2011-12" class="team-logo">
+                  <span>JENIMPAZ 2011-12</span>
+                </div>
+              </td>
+              <td>9</td>
+              <td>-33</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>19</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS B 2011-12" class="team-logo">
+                  <span>AQJAIYQ JAS B 2011-12</span>
+                </div>
+              </td>
+              <td>14</td>
+              <td>-69</td>
+              <td>3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="table-2013-2014-A" class="table-container" style="display: none;">
+        <h3 class="table-title">2013–2014 – Дивизион A</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Поз.</th>
+              <th>Команда</th>
+              <th>И</th>
+              <th>Разн.</th>
+              <th>Очки</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Atlanta FC.PNG" alt="ATLANTA СХИ" class="team-logo">
+                  <span>ATLANTA СХИ</span>
+                </div>
+              </td>
+              <td>12</td>
+              <td>+39</td>
+              <td>31</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Aqjaiyq Jas.PNG" alt="AQAJQYQ JAS 46" class="team-logo">
+                  <span>AQAJQYQ JAS 46</span>
+                </div>
+              </td>
+              <td>11</td>
+              <td>+37</td>
+              <td>26</td>
+            </tr>
+            <tr>
+              <td>3</td>
               <td>
                 <div class="team-logo-container">
                   <img src="Baiterek.PNG" alt="BAITEREK JAS" class="team-logo">
                   <span>BAITEREK JAS</span>
                 </div>
               </td>
-              <td>10</td><td>6</td><td>2</td><td>2</td><td>20</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Arystan.PNG" alt="ARYSTAN" class="team-logo">
-                  <span>ARYSTAN</span>
-                </div>
-              </td>
-              <td>9</td><td>6</td><td>1</td><td>2</td><td>19</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Algabas.PNG" alt="ALGABAS" class="team-logo">
-                  <span>ALGABAS</span>
-                </div>
-              </td>
-              <td>10</td><td>6</td><td>1</td><td>3</td><td>19</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Zhayik Jastary.PNG" alt="JAYIQ JASTARY" class="team-logo">
-                  <span>JAYIQ JASTARY</span>
-                </div>
-              </td>
-              <td>10</td><td>5</td><td>0</td><td>5</td><td>15</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
-                  <span>ALGABAS DARINSK</span>
-                </div>
-              </td>
-              <td>8</td><td>4</td><td>0</td><td>4</td><td>12</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Umit.PNG" alt="YMIT" class="team-logo">
-                  <span>YMIT</span>
-                </div>
-              </td>
-              <td>10</td><td>3</td><td>0</td><td>7</td><td>9</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>
-                <div class="team-logo-container">
-                  <img src="Atlanta FC.PNG" alt="ATLANTA ДЕРКУЛ" class="team-logo">
-                  <span>ATLANTA ДЕРКУЛ</span>
-                </div>
-              </td>
-              <td>11</td><td>0</td><td>2</td><td>9</td><td>2</td>
-            </tr>
-            <tr>
               <td>11</td>
-              <td>
-                <div class="team-logo-container">
-                  <img src="KRG.PNG" alt="KRG" class="team-logo">
-                  <span>KRG</span>
-                </div>
-              </td>
-              <td>11</td><td>0</td><td>2</td><td>9</td><td>2</td>
+              <td>+23</td>
+              <td>25</td>
             </tr>
             <tr>
-              <td>12</td>
-              <td>
-                <div class="team-logo-container">
-                  <span>ФШ ГЭЛАКСИ</span>
-                </div>
-              </td>
-              <td>11</td><td>0</td><td>2</td><td>9</td><td>2</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="table-container" id="table-2015-2016-B" style="display: none;">
-        <h3 class="table-title">2015–2016 – Дивизион B</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>О</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="team-logo-container">
-                  <img src="SD Family.PNG" alt="SD FAMILY" class="team-logo">
-                  <span>SD FAMILY</span>
-                </div>
-              </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-            <tr>
+              <td>4</td>
               <td>
                 <div class="team-logo-container">
                   <img src="Nomad.PNG" alt="NOMAD" class="team-logo">
                   <span>NOMAD</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>12</td>
+              <td>+22</td>
+              <td>25</td>
             </tr>
             <tr>
+              <td>5</td>
               <td>
                 <div class="team-logo-container">
-                  <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 2 KOLLEDJ" class="team-logo">
-                  <span>AQJAIYQ JAS 2 KOLLEDJ</span>
+                  <img src="Atlanta FC.PNG" alt="ATLANTA ДЕРКУЛ" class="team-logo">
+                  <span>ATLANTA ДЕРКУЛ</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>13</td>
+              <td>+20</td>
+              <td>25</td>
             </tr>
             <tr>
+              <td>6</td>
               <td>
                 <div class="team-logo-container">
-                  <img src="Nomad.PNG" alt="NOMAD 15" class="team-logo">
-                  <span>NOMAD 15</span>
+                  <img src="Arystan.PNG" alt="ARYSTAN" class="team-logo">
+                  <span>ARYSTAN</span>
                 </div>
               </td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>9</td>
+              <td>+23</td>
+              <td>22</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Jaras.PNG" alt="JARAS" class="team-logo">
+                  <span>JARAS</span>
+                </div>
+              </td>
+              <td>10</td>
+              <td>+17</td>
+              <td>21</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Football Time.PNG" alt="FOOTBALL TIME" class="team-logo">
+                  <span>FOOTBALL TIME</span>
+                </div>
+              </td>
+              <td>13</td>
+              <td>-5</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Zhayik Jastary.PNG" alt="JAYIQ JASTARY" class="team-logo">
+                  <span>JAYIQ JASTARY</span>
+                </div>
+              </td>
+              <td>11</td>
+              <td>-4</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Umit.PNG" alt="YMIT" class="team-logo">
+                  <span>YMIT</span>
+                </div>
+              </td>
+              <td>10</td>
+              <td>-16</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Legion.PNG" alt="LEGION" class="team-logo">
+                  <span>LEGION</span>
+                </div>
+              </td>
+              <td>10</td>
+              <td>-15</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
+                  <span>ALGABAS DARINSK</span>
+                </div>
+              </td>
+              <td>10</td>
+              <td>-21</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>
+                <div class="team-logo-container">
+                  <img src="Legion.PNG" alt="LEGION 2014 B" class="team-logo">
+                  <span>LEGION 2014 B</span>
+                </div>
+              </td>
+              <td>13</td>
+              <td>-60</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>
+                <div class="team-logo-container">
+                  <span>ФШ ГЭЛАКСИ</span>
+                </div>
+              </td>
+              <td>13</td>
+              <td>-60</td>
+              <td>1</td>
             </tr>
           </tbody>
         </table>
       </div>
+  
+      <div id="table-2013-2014-B" class="table-container" style="display: none;">
+        <h3 class="table-title">Сезон 2013-2014 (Группа Б)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Команда</th>
+              <th>И</th>
+              <th>Разн.</th>
+              <th>О</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>1</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Football Time.PNG" alt="FOOTBALL TIME Z 2013-14 B" class="team-logo">
+                    <span>FOOTBALL TIME Z 2013-14 B</span>
+                  </div>
+                </td>
+                <td>12</td>
+                <td>+39</td>
+                <td>34</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Arystan.PNG" alt="ARYSTAN 2013-14 B" class="team-logo">
+                    <span>ARYSTAN 2013-14 B</span>
+                  </div>
+                </td>
+                <td>12</td>
+                <td>+43</td>
+                <td>31</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS B 2013-14" class="team-logo">
+                    <span>AQJAIYQ JAS B 2013-14</span>
+                  </div>
+                </td>
+                <td>15</td>
+                <td>+19</td>
+                <td>31</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Football Time.PNG" alt="FOOTBALL TIME C 2013-14 B" class="team-logo">
+                    <span>FOOTBALL TIME C 2013-14 B</span>
+                  </div>
+                </td>
+                <td>14</td>
+                <td>+25</td>
+                <td>30</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Kairat.PNG" alt="KAIRAT 2013-14 B" class="team-logo">
+                    <span>KAIRAT 2013-14 B</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>+22</td>
+                <td>25</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 46 2013-14 B" class="team-logo">
+                    <span>AQJAIYQ JAS 46 2013-14 B</span>
+                  </div>
+                </td>
+                <td>14</td>
+                <td>+16</td>
+                <td>25</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Arystan.PNG" alt="ARYSTAN 2013-14 C" class="team-logo">
+                    <span>ARYSTAN 2013-14 C</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>+24</td>
+                <td>23</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="KRG.PNG" alt="KRG 2013-14 B" class="team-logo">
+                    <span>KRG 2013-14 B</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>+11</td>
+                <td>22</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Real Futsal.PNG" alt="REAL FUTSAL 2013-14 C" class="team-logo">
+                    <span>REAL FUTSAL 2013-14 C</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>+11</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Jaras.PNG" alt="JARAS 2014 B" class="team-logo">
+                    <span>JARAS 2014 B</span>
+                  </div>
+                </td>
+                <td>13</td>
+                <td>+9</td>
+                <td>19</td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Nomad.PNG" alt="NOMAD 2013-14 B" class="team-logo">
+                    <span>NOMAD 2013-14 B</span>
+                  </div>
+                </td>
+                <td>12</td>
+                <td>+1</td>
+                <td>16</td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Football Time.PNG" alt="FOOTBALL TIME E 2013-14 B" class="team-logo">
+                    <span>FOOTBALL TIME E 2013-14 B</span>
+                  </div>
+                </td>
+                <td>10</td>
+                <td>+10</td>
+                <td>14</td>
+              </tr>
+              <tr>
+                <td>13</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Football Time.PNG" alt="FOOTBALL TIME A 2013-14 B" class="team-logo">
+                    <span>FOOTBALL TIME A 2013-14 B</span>
+                  </div>
+                </td>
+                <td>14</td>
+                <td>-10</td>
+                <td>12</td>
+              </tr>
+              <tr>
+                <td>14</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Jenimpaz.PNG" alt="JENIMPAZ 2013-14 B" class="team-logo">
+                    <span>JENIMPAZ 2013-14 B</span>
+                  </div>
+                </td>
+                <td>10</td>
+                <td>-10</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td>15</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Algabas.PNG" alt="ALGABAS 2013-14 B" class="team-logo">
+                    <span>ALGABAS 2013-14 B</span>
+                  </div>
+                </td>
+                <td>16</td>
+                <td>-70</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>16</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Legion.PNG" alt="LEGION 2013-14 B" class="team-logo">
+                    <span>LEGION 2013-14 B</span>
+                  </div>
+                </td>
+                <td>16</td>
+                <td>-70</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>17</td>
+                <td>
+                  <div class="team-logo-container">
+                    <span>ФШ ГЭЛАКСИ 2013-14 B</span>
+                  </div>
+                </td>
+                <td>16</td>
+                <td>-70</td>
+                <td>2</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+  
+        <div class="table-container" id="table-2015-2016-A" style="display: none;">
+          <h3 class="table-title">2015–2016 – Дивизион A</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Поз.</th>
+                <th>Команда</th>
+                <th>И</th>
+                <th>Разн.</th>
+                <th>Очки</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 46" class="team-logo">
+                    <span>AQJAIYQ JAS 46</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>+28</td>
+                <td>30</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS JELEAVO" class="team-logo">
+                    <span>AQJAIYQ JAS JELEAVO</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>+29</td>
+                <td>25</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Baiterek.PNG" alt="BAITEREK JAS" class="team-logo">
+                    <span>BAITEREK JAS</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>+35</td>
+                <td>23</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Arystan.PNG" alt="ARYSTAN" class="team-logo">
+                    <span>ARYSTAN</span>
+                  </div>
+                </td>
+                <td>10</td>
+                <td>+31</td>
+                <td>22</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Football Time.PNG" alt="FOOTBALL TIME" class="team-logo">
+                    <span>FOOTBALL TIME</span>
+                  </div>
+                </td>
+                <td>9</td>
+                <td>+30</td>
+                <td>22</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Algabas.PNG" alt="ALGABAS" class="team-logo">
+                    <span>ALGABAS</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>+9</td>
+                <td>19</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Zhayik Jastary.PNG" alt="JAYIQ JASTARY" class="team-logo">
+                    <span>JAYIQ JASTARY</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>-10</td>
+                <td>15</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Algabas.PNG" alt="ALGABAS DARINSK" class="team-logo">
+                    <span>ALGABAS DARINSK</span>
+                  </div>
+                </td>
+                <td>9</td>
+                <td>0</td>
+                <td>12</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Umit.PNG" alt="YMIT" class="team-logo">
+                    <span>YMIT</span>
+                  </div>
+                </td>
+                <td>10</td>
+                <td>-17</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="Atlanta FC.PNG" alt="ATLANTA ДЕРКУЛ" class="team-logo">
+                    <span>ATLANTA ДЕРКУЛ</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>-45</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>
+                  <div class="team-logo-container">
+                    <img src="KRG.PNG" alt="KRG" class="team-logo">
+                    <span>KRG</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>-45</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>
+                  <div class="team-logo-container">
+                    <span>ФШ ГЭЛАКСИ</span>
+                  </div>
+                </td>
+                <td>11</td>
+                <td>-45</td>
+                <td>2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+  
+  <div class="table-container" id="table-2015-2016-B" style="display: none;">
+    <h3 class="table-title">2015–2016 – Дивизион B</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Поз.</th>
+          <th>Команда</th>
+          <th>И</th>
+          <th>В</th>
+          <th>Н</th>
+          <th>П</th>
+          <th>Разн.</th>
+          <th>Очки</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <div class="team-logo-container">
+              <img src="SD Family.PNG" alt="SD FAMILY" class="team-logo">
+              <span>SD FAMILY</span>
+            </div>
+          </td>
+          <td>11</td>
+          <td>8</td>
+          <td>2</td>
+          <td>1</td>
+          <td>+20</td>
+          <td>26</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>
+            <div class="team-logo-container">
+              <img src="Nomad.PNG" alt="NOMAD" class="team-logo">
+              <span>NOMAD</span>
+            </div>
+          </td>
+          <td>10</td>
+          <td>8</td>
+          <td>1</td>
+          <td>1</td>
+          <td>+18</td>
+          <td>25</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>
+            <div class="team-logo-container">
+              <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS 2 KOLLEDJ" class="team-logo">
+              <span>AQJAIYQ JAS 2 KOLLEDJ</span>
+            </div>
+          </td>
+          <td>11</td>
+          <td>7</td>
+          <td>2</td>
+          <td>2</td>
+          <td>+15</td>
+          <td>23</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>
+            <div class="team-logo-container">
+              <img src="Jaras.PNG" alt="JARAS" class="team-logo">
+              <span>JARAS</span>
+            </div>
+          </td>
+          <td>10</td>
+          <td>6</td>
+          <td>1</td>
+          <td>3</td>
+          <td>+8</td>
+          <td>19</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>
+            <div class="team-logo-container">
+              <img src="Legion.PNG" alt="LEGION" class="team-logo">
+              <span>LEGION</span>
+            </div>
+          </td>
+          <td>10</td>
+          <td>5</td>
+          <td>0</td>
+          <td>5</td>
+          <td>-2</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>
+            <div class="team-logo-container">
+              <img src="Aqjaiyq Jas.PNG" alt="AQJAIYQ JAS" class="team-logo">
+              <span>AQJAIYQ JAS</span>
+            </div>
+          </td>
+          <td>11</td>
+          <td>4</td>
+          <td>2</td>
+          <td>5</td>
+          <td>-5</td>
+          <td>14</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    </section>
+
+    <section id="playoffs" class="page">
+        <h2>Плей-офф</h2>
+        <div class="playoff-division-buttons division-buttons">
+            <button data-playoff-div="playoff-2011-2012" class="active">2011-2012</button>
+            <button data-playoff-div="playoff-2013-2014-A">2013-2014 (A)</button>
+            <button data-playoff-div="playoff-2013-2014-B">2013-2014 (B)</button>
+            <button data-playoff-div="playoff-2015-2016-A">2015-2016 (A)</button>
+            <button data-playoff-div="playoff-2015-2016-B">2015-2016 (B)</button>
+        </div>
+
+        <div class="playoff-grid-container" id="playoff-2011-2012">
+            <h3 class="table-title">Плей-офф 2011-2012</h3>
+            <div class="playoff-grid">
+                <div class="round quarter-finals">
+                    <h4>1/4 Финала</h4>
+                    <div class="match">
+                        <div class="team">Команда 1</div>
+                        <div class="score"></div>
+                        <div class="team">Команда 8</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда 4</div>
+                        <div class="score"></div>
+                        <div class="team">Команда 5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда 2</div>
+                        <div class="score"></div>
+                        <div class="team">Команда 7</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда 3</div>
+                        <div class="score"></div>
+                        <div class="team">Команда 6</div>
+                    </div>
+                </div>
+                <div class="round semi-finals">
+                    <h4>1/2 Финала</h4>
+                    <div class="match">
+                        <div class="team">Победитель 1/8</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель 4/5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Победитель 2/7</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель 3/6</div>
+                    </div>
+                </div>
+                <div class="round final">
+                    <h4>Финал</h4>
+                    <div class="match">
+                        <div class="team">Победитель 1/2</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель 3/4</div>
+                    </div>
+                </div>
+                <div class="round champion">
+                    <h4>Чемпион</h4>
+                    <div class="champion-team">
+                        <div class="team-logo-container">
+                            <img src="DAMU.PNG" alt="Чемпион" class="team-logo">
+                            <span>Победитель Плей-офф</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="playoff-grid-container" id="playoff-2013-2014-A" style="display: none;">
+            <h3 class="table-title">Плей-офф 2013-2014 (Дивизион A)</h3>
+            <div class="playoff-grid">
+                <div class="round quarter-finals">
+                    <h4>1/4 Финала</h4>
+                    <div class="match">
+                        <div class="team">Команда A1</div>
+                        <div class="score"></div>
+                        <div class="team">Команда A8</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда A4</div>
+                        <div class="score"></div>
+                        <div class="team">Команда A5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда A2</div>
+                        <div class="score"></div>
+                        <div class="team">Команда A7</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда A3</div>
+                        <div class="score"></div>
+                        <div class="team">Команда A6</div>
+                    </div>
+                </div>
+                <div class="round semi-finals">
+                    <h4>1/2 Финала</h4>
+                    <div class="match">
+                        <div class="team">Победитель A1/8</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель A4/5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Победитель A2/7</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель A3/6</div>
+                    </div>
+                </div>
+                <div class="round final">
+                    <h4>Финал</h4>
+                    <div class="match">
+                        <div class="team">Победитель A1/2</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель A3/4</div>
+                    </div>
+                </div>
+                <div class="round champion">
+                    <h4>Чемпион</h4>
+                    <div class="champion-team">
+                        <div class="team-logo-container">
+                            <img src="DAMU.PNG" alt="Чемпион" class="team-logo">
+                            <span>Чемпион Дивизиона А</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="playoff-grid-container" id="playoff-2013-2014-B" style="display: none;">
+            <h3 class="table-title">Плей-офф 2013-2014 (Дивизион B)</h3>
+            <div class="playoff-grid">
+                <div class="round quarter-finals">
+                    <h4>1/4 Финала</h4>
+                    <div class="match">
+                        <div class="team">Команда B1</div>
+                        <div class="score"></div>
+                        <div class="team">Команда B8</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда B4</div>
+                        <div class="score"></div>
+                        <div class="team">Команда B5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда B2</div>
+                        <div class="score"></div>
+                        <div class="team">Команда B7</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда B3</div>
+                        <div class="score"></div>
+                        <div class="team">Команда B6</div>
+                    </div>
+                </div>
+                <div class="round semi-finals">
+                    <h4>1/2 Финала</h4>
+                    <div class="match">
+                        <div class="team">Победитель B1/8</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель B4/5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Победитель B2/7</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель B3/6</div>
+                    </div>
+                </div>
+                <div class="round final">
+                    <h4>Финал</h4>
+                    <div class="match">
+                        <div class="team">Победитель B1/2</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель B3/4</div>
+                    </div>
+                </div>
+                <div class="round champion">
+                    <h4>Чемпион</h4>
+                    <div class="champion-team">
+                        <div class="team-logo-container">
+                            <img src="DAMU.PNG" alt="Чемпион" class="team-logo">
+                            <span>Чемпион Дивизиона B</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="playoff-grid-container" id="playoff-2015-2016-A" style="display: none;">
+            <h3 class="table-title">Плей-офф 2015-2016 (Дивизион A)</h3>
+            <div class="playoff-grid">
+                <div class="round quarter-finals">
+                    <h4>1/4 Финала</h4>
+                    <div class="match">
+                        <div class="team">Команда C1</div>
+                        <div class="score"></div>
+                        <div class="team">Команда C8</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда C4</div>
+                        <div class="score"></div>
+                        <div class="team">Команда C5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда C2</div>
+                        <div class="score"></div>
+                        <div class="team">Команда C7</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда C3</div>
+                        <div class="score"></div>
+                        <div class="team">Команда C6</div>
+                    </div>
+                </div>
+                <div class="round semi-finals">
+                    <h4>1/2 Финала</h4>
+                    <div class="match">
+                        <div class="team">Победитель C1/8</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель C4/5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Победитель C2/7</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель C3/6</div>
+                    </div>
+                </div>
+                <div class="round final">
+                    <h4>Финал</h4>
+                    <div class="match">
+                        <div class="team">Победитель C1/2</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель C3/4</div>
+                    </div>
+                </div>
+                <div class="round champion">
+                    <h4>Чемпион</h4>
+                    <div class="champion-team">
+                        <div class="team-logo-container">
+                            <img src="DAMU.PNG" alt="Чемпион" class="team-logo">
+                            <span>Чемпион Дивизиона А</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="playoff-grid-container" id="playoff-2015-2016-B" style="display: none;">
+            <h3 class="table-title">Плей-офф 2015-2016 (Дивизион B)</h3>
+            <div class="playoff-grid">
+                <div class="round quarter-finals">
+                    <h4>1/4 Финала</h4>
+                    <div class="match">
+                        <div class="team">Команда D1</div>
+                        <div class="score"></div>
+                        <div class="team">Команда D8</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда D4</div>
+                        <div class="score"></div>
+                        <div class="team">Команда D5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда D2</div>
+                        <div class="score"></div>
+                        <div class="team">Команда D7</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Команда D3</div>
+                        <div class="score"></div>
+                        <div class="team">Команда D6</div>
+                    </div>
+                </div>
+                <div class="round semi-finals">
+                    <h4>1/2 Финала</h4>
+                    <div class="match">
+                        <div class="team">Победитель D1/8</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель D4/5</div>
+                    </div>
+                    <div class="match">
+                        <div class="team">Победитель D2/7</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель D3/6</div>
+                    </div>
+                </div>
+                <div class="round final">
+                    <h4>Финал</h4>
+                    <div class="match">
+                        <div class="team">Победитель D1/2</div>
+                        <div class="score"></div>
+                        <div class="team">Победитель D3/4</div>
+                    </div>
+                </div>
+                <div class="round champion">
+                    <h4>Чемпион</h4>
+                    <div class="champion-team">
+                        <div class="team-logo-container">
+                            <img src="DAMU.PNG" alt="Чемпион" class="team-logo">
+                            <span>Чемпион Дивизиона B</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </section>
   </main>
 
-  <script>
-    // DOM Elements
-    const themeToggleBtn = document.querySelector('.theme-toggle');
-    const pages = document.querySelectorAll('.page');
-    
-    // Theme Toggle
-    function toggleTheme() {
-      document.body.classList.toggle('dark-theme');
-      const isDark = document.body.classList.contains('dark-theme');
-      localStorage.setItem('darkTheme', isDark);
-      
-      const icon = themeToggleBtn.querySelector('.theme-icon');
-      icon.textContent = isDark ? '☀️' : '🌙';
-    }
-    
-    // Page Navigation
-    function showPage(pageId) {
-      pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-      
-      // Reset to first division when changing pages
-      if (pageId === 'schedule') {
-        showDivision('2011-2012');
-      } else if (pageId === 'table') {
-        showLeagueTable('table-2011-2012');
-      }
-    }
-    
-    // Division Navigation (Schedule)
-    function showDivision(divId) {
-      document.querySelectorAll('#schedule .division').forEach(div => {
-        div.style.display = 'none';
-      });
-      document.getElementById(divId).style.display = 'block';
-      
-      // Update active button
-      document.querySelectorAll('#schedule .division-buttons button').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      // event.target is undefined when called programmatically, handle this
-      const targetButton = document.querySelector(`#schedule .division-buttons button[onclick="showDivision('${divId}')"]`);
-      if (targetButton) {
-        targetButton.classList.add('active');
-      }
-    }
-    
-    // League Table Navigation
-    function showLeagueTable(tableId) {
-      document.querySelectorAll('#table .table-container').forEach(table => {
-        table.style.display = 'none';
-      });
-      document.getElementById(tableId).style.display = 'block';
-      
-      // Update active button
-      document.querySelectorAll('#table .division-buttons button').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      // event.target is undefined when called programmatically, handle this
-      const targetButton = document.querySelector(`#table .division-buttons button[onclick="showLeagueTable('${tableId}')"]`);
-      if (targetButton) {
-        targetButton.classList.add('active');
-      }
-    }
-    
-    // Initialize
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set theme from localStorage
-      if (localStorage.getItem('darkTheme') === 'true') {
-        document.body.classList.add('dark-theme');
-        themeToggleBtn.querySelector('.theme-icon').textContent = '☀️';
-      }
-      
-      // Set default active page and division
-      showPage('schedule'); // This will call showDivision('2011-2012')
-      showLeagueTable('table-2011-2012'); // This will call showLeagueTable('table-2011-2012')
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
